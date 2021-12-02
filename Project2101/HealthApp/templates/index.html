@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block body %}
+{% if message %}
+	<div>
+		{{ message }}
+	</div>
+{% endif %}
+<form action="{% url 'logout' %}" method="get">
+	<input type="submit" value="Logout"/>
+</form>
+{% endblock %}
