@@ -28,3 +28,5 @@ def login_view(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "login.html", {"message": "Invalid credentials."})
+
+    #make all request post and put if request.method==post else raise http404("invalid")
