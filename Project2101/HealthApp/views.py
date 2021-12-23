@@ -10,10 +10,25 @@ from django.urls import reverse
 def index(request):
     if not request.user.is_authenticated:
         return render(request,"login.html",{"message": None})
-    message = {
-        "message":"Logged in Yay"
-    }
-    return render(request,"index.html",message)
+    current_user = request.user
+    user_type = UserType.objects.filter(username = current_user.username)
+    user_type = user_type[0]
+    print(current_user.username, user_type)
+    if user_type.userType == "D":
+        message = {
+            "message":"Logged in as Doctor"
+        }
+        return render(request,"index.html",message)
+    elif user_type.userType == "P":
+        message = {
+            "message":"Logged in as Patient"
+        }
+        return render(request,"index.html",message)
+    else:
+        message = {
+            "message": "Logged in as Doctor"
+        }
+        return render(request, "index.html", message)
 
 def logout_view(request):
     logout(request)
