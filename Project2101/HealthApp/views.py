@@ -26,7 +26,7 @@ def index(request):
         return render(request,"index.html",message)
     else:
         message = {
-            "message": "Logged in as Doctor"
+            "message": "Logged in Yay"
         }
         return render(request, "index.html", message)
 
