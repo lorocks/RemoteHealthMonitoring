@@ -3,7 +3,6 @@ from .models import *
 
 # Register your models here.
 admin.site.register(UserType)
-admin.site.register(UserIDs)
 admin.site.register(Patients)
 admin.site.register(Doctors)
 admin.site.register(DailyData)

@@ -11,14 +11,8 @@ class UserType(models.Model):
     def __str__(self):
         return f"{self.username} of Django userID {self.userID}, {self.userType}"
 
-class UserIDs(models.Model):
-    username = models.ForeignKey(UserType, on_delete = models.CASCADE)
-
-    def __str__(self):
-        return self.username
-
 class Doctors(models.Model):
-    DoctorID = models.ForeignKey(UserIDs, on_delete = models.CASCADE, primary_key = True)
+    DoctorID = models.ForeignKey(UserType, on_delete = models.CASCADE, primary_key = True)
     Name = models.CharField(max_length = 100, null = False, blank = False)
     ContactNum = models.CharField(max_length = 12, null = False, blank = False) #do num validation in front end, add on_delete
     Hospital = models.CharField(max_length = 100, null = False, blank = False)
@@ -28,7 +22,7 @@ class Doctors(models.Model):
 
 class Patients(models.Model):
     GenderChoices = [("F", "Female"), ("M", "Male")]
-    PatientID = models.ForeignKey(UserIDs, on_delete = models.CASCADE, primary_key = True)
+    PatientID = models.ForeignKey(UserType, on_delete = models.CASCADE, primary_key = True)
     DoctorID = models.ForeignKey(Doctors, on_delete = models.CASCADE, null = False, blank = False)
     Name = models.CharField(max_length=100, null=False, blank=False)
     DOB = models.DateField(null=False, blank=False)

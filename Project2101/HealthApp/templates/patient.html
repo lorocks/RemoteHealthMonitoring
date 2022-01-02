@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div>
+	Welcome {{ user.username }}
+</div>
+{% if message %}
+	<div>
+		{{ message }}
+	</div>
+{% endif %}
+{% if daily %}
+	<div>
+		{{ daily }}
+	</div>
+{% endif %}
+<form action="{% url 'logout' %}" method="get">
+	<input type="submit" value="Logout"/>
+</form>
+{% endblock %}

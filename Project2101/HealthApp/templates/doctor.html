@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block body %}
+{% if message %}
+	<div>
+		{{ message }}
+	</div>
+{% endif %}
+<div>
+	Welcome {{ user.Name }}
+</div>
+{% for patient in patients %}
+<form action="{% url 'patient_dashboard' %}" method="post">
+	{% csrf_token %}
+	<input name="docpost" type="submit" value="{{ patient }}"/>
+</form>
+{% endfor %}
+<form action="{% url 'logout' %}" method="get">
+	<input type="submit" value="Logout"/>
+</form>
+{% endblock %}
