@@ -1,6 +1,9 @@
 {% extends "layout.html" %}
 
 {% block body %}
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+</script>
 <div>
 	Welcome {{ user.username }}
 </div>
@@ -9,11 +12,86 @@
 		{{ message }}
 	</div>
 {% endif %}
-{% if daily %}
+{% if weekly %}
 	<div>
-		{{ daily }}
+		Last Recorded Weight: {{ weekly.Weight }}
+	</div>
+	<div>
+		Last Recorded Height: {{ weekly.Height }}
+	</div>
+	<div>
+		BMI: {{ weekly.BMI }}
 	</div>
 {% endif %}
+{% if daily %}
+	<div>
+		Last Recorded Average Temp: {{ daily.LastAvgTemp }}
+	</div>
+	<div>
+		Last Recorded Average Heart Rate: {{ daily.LastAvgHeartRate }}
+	</div>
+	<div>
+		Last Recorded Blood Sugar: {{ daily.BloodSugar }}
+	</div>
+	<div>
+		Last Recorded Blood Pressure: {{ daily.BloodPressure }}
+	</div>
+{% endif %}
+{% if secondPulData %}
+	<canvas id="myChartPul" style="width:100%;max-width:700px"></canvas>
+{% endif %}
+{% if secondTempData %}
+	<canvas id="myChartTemp" style="width:100%;max-width:700px"></canvas>
+{% endif %}
+	<script>
+		var xValues = {{ timeData }};
+		var yValues = {{ secondTempData }};
+
+		var xLabel = [];
+
+		new Chart("myChartTemp", {
+  			type: "line",
+  			data: {
+    			labels: xValues,
+    			datasets: [{
+      			fill: false,
+      			lineTension: 0,
+      			backgroundColor: "rgba(0,0,255,1.0)",
+      			borderColor: "rgba(0,0,255,0.1)",
+      			data: yValues
+    			}]
+  			},
+  			options: {
+    			legend: {display: false},
+    			scales: {
+      			yAxes: [{ticks: {min: 35, max:37}}],
+    			}
+  			}
+			});
+
+		var yValues = {{ secondPulData }};
+
+		new Chart("myChartPul", {
+  			type: "line",
+  			data: {
+    			labels: xValues,
+    			datasets: [{
+      			fill: false,
+      			lineTension: 0,
+      			backgroundColor: "rgba(0,0,255,1.0)",
+      			borderColor: "rgba(0,0,255,0.1)",
+      			data: yValues
+    			}]
+  			},
+  			options: {
+    			legend: {display: false},
+    			scales: {
+      			yAxes: [{ticks: {min: 30, max:60}}],
+    			}
+  			}
+			});
+	</script>
+
 <form action="{% url 'logout' %}" method="get">
 	<input type="submit" value="Logout"/>
 </form>

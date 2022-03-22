@@ -40,10 +40,10 @@ class Patients(models.Model):
 class DailyData(models.Model):
     PatientID = models.ForeignKey(Patients, on_delete = models.CASCADE)
     Date = models.DateField(null=False, blank=False)
-    LastAvgTemp = models.FloatField()    #fill when person enters sugar lvl, by run procedure ig
-    LastAvgHeartRate = models.FloatField()   #fill when person enters sugar lvl, by run procedure ig of previous day
-    BloodSugar = models.FloatField()
-    BloodPressure = models.FloatField()
+    LastAvgTemp = models.FloatField(null=True, blank=True)    #fill when person enters sugar lvl, by run procedure ig
+    LastAvgHeartRate = models.FloatField(null=True, blank=True)   #fill when person enters sugar lvl, by run procedure ig of previous day
+    BloodSugar = models.FloatField(null=True, blank=True)
+    BloodPressure = models.FloatField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.PatientID}, {self.Date}"
@@ -61,9 +61,9 @@ class SecondlyData(models.Model):
 class WeeklyData(models.Model): # or monthly idk
     PatientID = models.ForeignKey(Patients, on_delete=models.CASCADE)
     Date = models.DateField(null=False, blank=False)
-    Weight = models.FloatField()
-    Height = models.FloatField()
-    BMI = models.FloatField()
+    Weight = models.FloatField(null=True, blank=True)
+    Height = models.FloatField(null=True, blank=True)
+    BMI = models.FloatField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.PatientID}, {self.Date}"
