@@ -67,3 +67,9 @@ class WeeklyData(models.Model): # or monthly idk
 
     def __str__(self):
         return f"{self.PatientID}, {self.Date}"
+
+class testingAPI(models.Model):
+    data = models.FloatField()
+
+    def __str__(self):
+        return data

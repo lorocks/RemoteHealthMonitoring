@@ -1,16 +1,103 @@
 {% extends "layout.html" %}
+{% load static %}
+
+{% block head %}
+
+{% endblock %}
 
 {% block body %}
-<h1>Login</h1>
-{% if message %}
-    <div>
-        {{ message }}
+<!--<img class="object-cover" src="pic_trulli.jpg" alt="Italian Trulli">-->
+<!--<h1>Login</h1>-->
+<!--{% if message %}-->
+<!--    <div>-->
+<!--        {{ message }}-->
+<!--    </div>-->
+<!--{% endif %}-->
+<!--<form action="{% url 'login' %}" method="post">-->
+<!--    {% csrf_token %}-->
+<!--    <input name="username" type="text" placeholder="Username"/>-->
+<!--    <input name="password" type="password" placeholder="Password"/>-->
+<!--    <input type="submit" value="Login"/>-->
+<!--</form>-->
+
+<div class="flex items-center justify-center min-h-screen bg-[url('../static/wave.jpg')]">
+    <div class="px-8 py-6 mt-4 text-left bg-white shadow-lg">
+        <div class="flex justify-center">
+<!--            <svg xmlns="http://www.w3.org/2000/svg" class="w-20 h-20 text-blue-600" fill="none" viewBox="0 0 24 24"-->
+<!--                stroke="currentColor">-->
+<!--                <path d="M12 14l9-5-9-5-9 5 9 5z" />-->
+<!--                <path-->
+<!--                    d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />-->
+<!--                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"-->
+<!--                    d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />-->
+<!--            </svg>-->
+            <svg class="w-20 h-20 text-blue-600" fill="none" viewBox="0 0 280 280"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink">
+
+  <style type="text/css"><![CDATA[
+    .heart {fill:red;stroke:black;stroke-width:0.5px;}
+    .vline {stroke:red;}
+
+    .show {display:initial;}
+    .hide {display:none;}
+
+    .h1 {display:initial;}
+    .h2 {display:none;}
+  ]]>
+  </style>
+
+  <defs>
+    <symbol id="Heart" viewBox="0 0 280 270">
+      <path d="M140,58L140,267" class="vline" />
+      <path d="M140,58c30,-60,110,-60,130,0c30,100,-110,150,-130,210" />
+      <path d="M140,58c-30,-60,-110,-60,-130,0c-30,100,110,150,130,210" />
+    </symbol>
+  </defs>
+
+  <g transform="translate(0,0) scale(1)" class="heart">
+    <g class="h1">
+      <use x="0" y="0" width="280" height="270" xlink:href="#Heart" />
+      <animate attributeName="class" values="show;hide;" dur="1s" repeatCount="indefinite" />
+    </g>
+  </g>
+
+  <g transform="translate(14,14) scale(0.9)" class="heart">
+    <g class="h2">
+      <use x="0" y="0" width="280" height="270" xlink:href="#Heart" />
+      <animate attributeName="class" values="hide;show;" dur="1s" repeatCount="indefinite" />
+    </g>
+  </g>
+
+</svg>
+
+
+        </div>
+        <h3 class="text-center text-4xl text-indigo-900 font-display font-semibold lg:text-left xl:text-2xl
+                    xl:text-bold">Login to your account</h3>
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <div class="mt-4">
+                <div>
+                    {% if message %}
+                    <span class="text-xs tracking-wide text-red-600">{{ message }} </span>
+                    {% endif %}
+                    <label class="block">Email</label>
+                            <input name="username" type="text" placeholder="Username"
+                                class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
+                </div>
+                <div class="mt-4">
+                    <label class="block">Password</label>
+                            <input name="password" type="password" placeholder="Password"
+                                class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
+                </div>
+                <div class="flex items-baseline justify-between">
+                    <input type="submit" class="px-6 py-2 mt-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900" value="Login"/>
+<!--                    <a href="#" class="text-sm text-blue-600 hover:underline">Forgot password?</a>-->
+                </div>
+            </div>
+        </form>
     </div>
-{% endif %}
-<form action="{% url 'login' %}" method="post">
-    {% csrf_token %}
-    <input name="username" type="text" placeholder="Username"/>
-    <input name="password" type="password" placeholder="Password"/>
-    <input type="submit" value="Login"/>
-</form>
+</div>
+
 {% endblock %}

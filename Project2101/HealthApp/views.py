@@ -39,7 +39,7 @@ def login_view(request):
             login(request, user)
             return HttpResponseRedirect(reverse("index"))
         else:
-            return render(request, "login.html", {"message": "Invalid credentials."})
+            return render(request, "login.html", {"message": "Invalid credentials"})
     else:
         raise Http404("Invalid Gateway")
 
@@ -124,3 +124,6 @@ Secondly is got full time from sensor
 Daily
 date in models is of type date from datetime lib 
 """
+
+def html_api(request):
+    return
