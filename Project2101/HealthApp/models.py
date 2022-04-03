@@ -42,6 +42,7 @@ class DailyData(models.Model):
     Date = models.DateField(null=False, blank=False)
     LastAvgTemp = models.FloatField(null=True, blank=True)    #fill when person enters sugar lvl, by run procedure ig
     LastAvgHeartRate = models.FloatField(null=True, blank=True)   #fill when person enters sugar lvl, by run procedure ig of previous day
+    LastAvgOxygen = models.FloatField(null=False, blank=False, default=0)
     BloodSugar = models.FloatField(null=True, blank=True)
     BloodPressure = models.FloatField(null=True, blank=True)
 
@@ -54,6 +55,7 @@ class SecondlyData(models.Model):
     Time = models.TimeField(null=False, blank=False)
     Pulse = models.FloatField(null=False, blank=False)
     Temp = models.FloatField(null=False, blank=False)
+    Oxygen = models.FloatField(null=False, blank=False, default=0)
 
     def __str__(self):
         return f"{self.PatientID}, {self.Date}"
@@ -70,6 +72,7 @@ class WeeklyData(models.Model): # or monthly idk
 
 class testingAPI(models.Model):
     data = models.FloatField()
+    string = models.CharField(max_length=200, default="")
 
     def __str__(self):
-        return data
+        return f"{self.data}, {self.string}"

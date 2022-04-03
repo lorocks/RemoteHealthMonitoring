@@ -12,6 +12,11 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
 		{{ message }}
 	</div>
 {% endif %}
+<!--{% if details %}-->
+<!--	<div>-->
+<!--		{{ details }}-->
+<!--	</div>-->
+<!--{% endif %}-->
 {% if weekly %}
 	<div>
 		Last Recorded Weight: {{ weekly.Weight }}
@@ -91,8 +96,13 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
   			}
 			});
 	</script>
-
-<form action="{% url 'logout' %}" method="get">
-	<input type="submit" value="Logout"/>
+<div class="absolute flex items-center justify-center" style="transform: translate(-100%, -100%); left:98%; top:5%;">
+<a href="logout" class="text-xl text-blue-600 hover:underline text-decoration-line: underline">Logout</a>
+</div>
+<form action="{% url 'redirect_add' %}" method="post">
+	  {% csrf_token %}
+	<input type="submit" name="daily" value="Add Daily Data"/>
+	<input type="submit" name="weekly" value="Add Weekly Data"/>
+	<input type="hidden" name="patient" value="{{details}}"/>
 </form>
 {% endblock %}

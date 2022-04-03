@@ -6,7 +6,7 @@
 		{{ message }}
 	</div>
 {% endif %}
-<form action="{% url 'logout' %}" method="get">
-	<input type="submit" value="Logout"/>
-</form>
+<div class="absolute flex items-center justify-center" style="transform: translate(-100%, -100%); left:98%; top:5%;">
+<a href="logout" class="text-xl text-blue-600 hover:underline text-decoration-line: underline">Logout</a>
+</div>
 {% endblock %}
