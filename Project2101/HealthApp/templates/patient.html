@@ -91,10 +91,16 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
   			options: {
     			legend: {display: false},
     			scales: {
-      			yAxes: [{ticks: {min: 30, max:60}}],
+      			yAxes: [{ticks: {min: 60, max:120}}],
     			}
   			}
 			});
+
+		function reload() {
+  			document.location.reload();
+		}
+
+		setTimeout(reload, 5000);
 	</script>
 <div class="absolute flex items-center justify-center" style="transform: translate(-100%, -100%); left:98%; top:5%;">
 <a href="logout" class="text-xl text-blue-600 hover:underline text-decoration-line: underline">Logout</a>
