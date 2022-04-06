@@ -13,4 +13,7 @@ urlpatterns = [
     path("redirect_add", views.redirect_adddata_view, name="redirect_add"),
     path("add_weekly", views.add_weekly_view, name="add_weekly"),
     path("add_daily", views.add_daily_view, name="add_daily"),
+    path("redirect_notify", views.redirect_notify, name="redirect_notify"),
+    path("doctor_email", views.doctor_email, name="doctor_email"),
+    path("start", views.index, name="start"),
 ]

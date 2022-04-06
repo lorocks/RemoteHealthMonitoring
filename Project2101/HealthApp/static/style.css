@@ -1,4 +1,7 @@
-
+input[type=button]
+{
+border:none;
+}
 .space{
 height:250px;
 }

@@ -16,6 +16,7 @@ class Doctors(models.Model):
     Name = models.CharField(max_length = 100, null = False, blank = False)
     ContactNum = models.CharField(max_length = 12, null = False, blank = False) #do num validation in front end, add on_delete
     Hospital = models.CharField(max_length = 100, null = False, blank = False)
+    EmailID = models.CharField(max_length=100, default="", null = False, blank = False)
 
     def __str__(self):
         return f"{self.DoctorID.username}, {self.Name}"
@@ -31,7 +32,7 @@ class Patients(models.Model):
     ContactNum = models.CharField(max_length = 12, null = False, blank = False)
     EmergencyContact = models.CharField(max_length = 12, null = False, blank = False)
     Insurance = models.CharField(max_length = 50)
-    EmailID = models.CharField(max_length = 100)
+    EmailID = models.CharField(max_length = 100, null = False, blank = False)
 
     def __str__(self):
         return f"{self.PatientID.username}, {self.Name}"

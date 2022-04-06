@@ -6,6 +6,8 @@ from django.shortcuts import render
 from django.urls import reverse
 from datetime import *
 
+from django.core.mail import send_mail
+
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -98,8 +100,9 @@ def patient_dashboard_view(request):
         message["secondTempData"].append(thing.Temp)
         ts = thing.Time.hour * 3600 + thing.Time.minute * 60 + thing.Time.second
         message["timeData"].append(ts)
-        print(type(thing.Time.strftime("%H:%M:%S")))
-
+    message["secondPulData"] = message["secondPulData"][-90:]
+    message["secondTempData"] = message["secondTempData"][-90:]
+    message["timeData"] = message["timeData"][-90:]
     message["details"] = patient
     message["daily"] = daily
     message["weekly"] = actualWeekly
@@ -184,6 +187,40 @@ def add_daily_view(request):
     else:
         raise Http404("Invalid brr Gateway")
     return HttpResponseRedirect(reverse("index"))
+
+def redirect_notify(request):
+    if request.method == 'POST':
+        current_user = request.user
+        user_type = UserType.objects.filter(username=current_user.username)
+        user_type = user_type[0]
+        if user_type.userType == 'P':
+            patient = Patients.objects.filter(PatientID=user_type.username)
+            patient = patient[0]
+            send_mail('Appointment Request', f'Dear Doctor,\nI would like to request for an appointment\nRegards {current_user.username}', 'll753@live.mdx.ac.uk', [patient.DoctorID.EmailID], fail_silently=False)
+            return HttpResponseRedirect(reverse("index"))
+        else:
+            message = {
+                "details": request.POST["patient"]
+            }
+            return render(request, "notify.html", message)
+    else:
+        return Http404("Invalid brr Gateway")
+
+def doctor_email(request):
+    if request.method == 'POST':
+        content = request.POST["message"]
+        title = request.POST["title"]
+        patient_check = request.POST["patient"]
+        patients = Patients.objects.all()
+        for thing in patients:
+            if thing.PatientID.username == patient_check[:4]:
+                guy = thing
+        send_mail(title,
+                  content,
+                  'll753@live.mdx.ac.uk', [guy.EmailID], fail_silently=False)
+        return HttpResponseRedirect(reverse("index"))
+    return Http404("Invalid brr Gateway")
+
 
 """Weekly has to be added by patient and BMI directly calculated
 Secondly is got full time from sensor
