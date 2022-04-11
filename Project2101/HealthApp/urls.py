@@ -1,6 +1,7 @@
 from django.urls import path
 from django.contrib import admin
-
+from django.conf import settings
+from django.conf.urls.static import static
 from . import views
 
 urlpatterns = [
@@ -16,4 +17,6 @@ urlpatterns = [
     path("redirect_notify", views.redirect_notify, name="redirect_notify"),
     path("doctor_email", views.doctor_email, name="doctor_email"),
     path("start", views.index, name="start"),
+    path("imagetest", views.image_view, name="image_view"),
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -77,3 +77,10 @@ class testingAPI(models.Model):
 
     def __str__(self):
         return f"{self.data}, {self.string}"
+
+class PatientImage(models.Model):
+    username = models.CharField(max_length = 4, primary_key = True)
+    img = models.ImageField(upload_to="media")
+
+    def __str__(self):
+        return f"{self.username}"

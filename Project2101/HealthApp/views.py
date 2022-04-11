@@ -35,6 +35,8 @@ def index(request):
         return render(request, "index.html", message)
 
 def logout_view(request):
+    if not request.user.is_authenticated:
+        return render(request,"login.html",{"message": None})
     logout(request)
     return render(request,"login.html",{"message":"Logged out"})
 
@@ -49,10 +51,12 @@ def login_view(request):
         else:
             return render(request, "login.html", {"message": "Invalid credentials"})
     else:
-        raise Http404("Invalid Gateway")
+        return HttpResponseRedirect(reverse("index"))
 
     #make all request post and put if request.method==post else raise http404("invalid")
 def patient_dashboard_view(request):
+    if not request.user.is_authenticated:
+        return render(request,"login.html",{"message": None})
     current_user = request.user
     user_type = UserType.objects.filter(username=current_user.username)
     user_type = user_type[0]
@@ -109,6 +113,8 @@ def patient_dashboard_view(request):
     return render(request, "patient.html", message)
 
 def doctor_dashboard_view(request):
+    if not request.user.is_authenticated:
+        return render(request,"login.html",{"message": None})
     current_user = request.user
     user_type = UserType.objects.filter(username=current_user.username)
     user_type = user_type[0]
@@ -128,15 +134,14 @@ def doctor_dashboard_view(request):
     return render(request, "doctor.html", message)
 
 def redirect_adddata_view(request):
+    if not request.user.is_authenticated:
+        return render(request,"login.html",{"message": None})
     message = {
-        "message": None,
         "details": request.POST["patient"]
     }
     if 'weekly' in request.POST:
-        message["message"]="Enter the Weekly Data"
         return render(request, "weeklyadd.html", message)
     elif 'daily' in request.POST:
-        message["message"]="Enter the Daily Data"
         return render(request, "dailyadd.html", message)
     else:
         raise Http404("Invalid brr Gateway")
@@ -144,6 +149,8 @@ def redirect_adddata_view(request):
 
 # need to somehow pass patient ID for both
 def add_weekly_view(request):
+    if not request.user.is_authenticated:
+        return render(request,"login.html",{"message": None})
     if request.method == 'POST':
         patient_check = request.POST["patient"]
         patients = Patients.objects.all()
@@ -162,6 +169,8 @@ def add_weekly_view(request):
     return HttpResponseRedirect(reverse("index"))
 
 def add_daily_view(request):
+    if not request.user.is_authenticated:
+        return render(request,"login.html",{"message": None})
     if request.method == 'POST':
         patient_check = request.POST["patient"]
         patients = Patients.objects.all()
@@ -189,6 +198,8 @@ def add_daily_view(request):
     return HttpResponseRedirect(reverse("index"))
 
 def redirect_notify(request):
+    if not request.user.is_authenticated:
+        return render(request,"login.html",{"message": None})
     if request.method == 'POST':
         current_user = request.user
         user_type = UserType.objects.filter(username=current_user.username)
@@ -207,6 +218,8 @@ def redirect_notify(request):
         return Http404("Invalid brr Gateway")
 
 def doctor_email(request):
+    if not request.user.is_authenticated:
+        return render(request,"login.html",{"message": None})
     if request.method == 'POST':
         content = request.POST["message"]
         title = request.POST["title"]
@@ -227,6 +240,14 @@ Secondly is got full time from sensor
 Daily
 date in models is of type date from datetime lib 
 """
+def image_view(request):
+    images = PatientImage.objects.all()
+    message = {
+        "message": "here u go kawaii girl",
+        "images": images
+    }
+    return render(request, "index.html", message)
+
 
 @api_view(['GET', 'POST'])
 def http_api(request):
