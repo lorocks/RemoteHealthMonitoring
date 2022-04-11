@@ -28,51 +28,67 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
 </script>
 
 	<main class="flex-1 overflow-y-auto p-5">
-<div>
-	Welcome {{ user.username }}
-</div>
-{% if message %}
-	<div>
-		{{ message }}
-	</div>
+		<div class="grid grid-cols-8 gap-8">
+{% if images %}
+	{% for img in images %}
+		{% if img.username == details.PatientID.username %}
+		<div class="col-span-2">
+			<img src="{{img.img.url}}" class="rounded-full" width="200"/>
+		</div>
+		{% endif %}
+	{% endfor %}
 {% endif %}
-<!--{% if details %}-->
-<!--	<div>-->
-<!--		{{ details }}-->
-<!--	</div>-->
-<!--{% endif %}-->
+			<div class="justify-center items-center col-span-2 bg-green shadow-lg">
+				<div>Patient</div>
+				<div>{{ details.Name }}</div>
+			</div>
 {% if weekly %}
-	<div>
-		Last Recorded Weight: {{ weekly.Weight }}
-	</div>
-	<div>
-		Last Recorded Height: {{ weekly.Height }}
-	</div>
-	<div>
-		BMI: {{ weekly.BMI }}
+			<div class="justify-center items-center col-span-2 bg-green shadow-lg">
+				<div>Sex: {{details.Gender}}</div>
+				<div>Age: {{details.Age}}</div>
+			</div>
+	<div class="justify-center items-center col-span-2 bg-green shadow-lg">
+		<div>{{ details.PatientID.username }}</div>
+		<div>Last Recorded Weight: {{ weekly.Weight }}</div>
+		<div>Last Recorded Height: {{ weekly.Height }}</div>
+		<div>BMI: {{ weekly.BMI }}</div>
 	</div>
 {% endif %}
 {% if daily %}
-	<div>
-		Last Recorded Average Temp: {{ daily.LastAvgTemp }}
+			<div class="flex flex-col justify-center items-center py-8 rounded-2xl justify-center items-center shadow-lg max-w-8">
+				<div>SPO2:</div>
+				<div>{{ daily.LastAvgOxygen }}</div>
+			</div>
+			<div class="flex flex-col py-8 justify-center items-center shadow-lg">
+		BP: {{ daily.BloodPressure }}
 	</div>
-	<div>
-		Last Recorded Average Heart Rate: {{ daily.LastAvgHeartRate }}
+			<div class="flex flex-col py-8 justify-center items-center shadow-lg">
+		BPM: {{ daily.LastAvgHeartRate }}
 	</div>
-	<div>
-		Last Recorded Blood Sugar: {{ daily.BloodSugar }}
+			<div class="flex flex-col py-8 justify-center items-center shadow-lg">
+				hypothermia somn
+			</div>
+	<div class="flex flex-col py-8 justify-center items-center shadow-lg">
+		Temp: {{ daily.LastAvgTemp }}
+	</div >
+
+	<div class="flex flex-col py-8 justify-center items-center shadow-lg">
+		Sugar: {{ daily.BloodSugar }}
 	</div>
-	<div>
-		Last Recorded Blood Pressure: {{ daily.BloodPressure }}
-	</div>
+
 {% endif %}
+<div>
 {% if secondPulData %}
-	<canvas id="myChartPul" height="290" style="width:100%;max-width:1500px;"></canvas>
+	<canvas id="myChartPul" height="150" style="width:100%;max-width:1500px;"></canvas>
 {% endif %}
+
 {% if secondTempData %}
-	<canvas id="myChartTemp" height="290" style="width:100%;max-width:1500px;"></canvas>
+	<canvas id="myChartTemp" height="150" style="width:100%;max-width:1500px;"></canvas>
 {% endif %}
+			</div>
+</div>
 	<script>
+	window.showChart = 1;
 		function buttonClick() {
 			var x = document.getElementById("myChartPul");
 			if (x.style.display === "none") {
@@ -148,9 +164,12 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
 
 		setTimeout(reload, 10000);
 	</script>
+
 		{% if timeData|length > 0 %}
 <button onclick="buttonClick()">Show Chart</button>
 		{% endif %}
+
 	</main>
 </div>
+
 {% endblock %}

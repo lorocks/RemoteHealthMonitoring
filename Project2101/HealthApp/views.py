@@ -6,6 +6,11 @@ from django.shortcuts import render
 from django.urls import reverse
 from datetime import *
 
+import pyautogui
+screenWidth, screenHeight= pyautogui.size()
+if screenWidth < 1930:
+    screenWidth = None
+
 from django.core.mail import send_mail
 
 from rest_framework import status
@@ -18,7 +23,7 @@ from .models import testingAPI
 
 def index(request):
     if not request.user.is_authenticated:
-        return render(request,"login.html",{"message": None})
+        return render(request,"login.html",{"message": None, "screen": screenWidth})
     current_user = request.user
     user_type = UserType.objects.filter(username = current_user.username)
 
@@ -36,9 +41,10 @@ def index(request):
 
 def logout_view(request):
     if not request.user.is_authenticated:
-        return render(request,"login.html",{"message": None})
+        return render(request,"login.html",{"message":None,"screen": screenWidth})
     logout(request)
-    return render(request,"login.html",{"message":"Logged out"})
+    return render(request,"login.html",{"message":"Logged out",
+                                        "screen":screenWidth})
 
 def login_view(request):
     if request.method == 'POST':
@@ -49,14 +55,15 @@ def login_view(request):
             login(request, user)
             return HttpResponseRedirect(reverse("index"))
         else:
-            return render(request, "login.html", {"message": "Invalid credentials"})
+            return render(request, "login.html", {"message": "Invalid credentials",
+                                                  "screen": screenWidth})
     else:
         return HttpResponseRedirect(reverse("index"))
 
     #make all request post and put if request.method==post else raise http404("invalid")
 def patient_dashboard_view(request):
     if not request.user.is_authenticated:
-        return render(request,"login.html",{"message": None})
+        return render(request,"login.html",{"message":None,"screen": screenWidth})
     current_user = request.user
     user_type = UserType.objects.filter(username=current_user.username)
     user_type = user_type[0]
@@ -75,7 +82,8 @@ def patient_dashboard_view(request):
         "weekly": None,
         "secondPulData": [],
         "secondTempData": [],
-        "timeData": []
+        "timeData": [],
+        "image": None
     }
 
     if request.method == 'POST':
@@ -104,17 +112,19 @@ def patient_dashboard_view(request):
         message["secondTempData"].append(thing.Temp)
         ts = thing.Time.hour * 3600 + thing.Time.minute * 60 + thing.Time.second
         message["timeData"].append(ts)
+    image = PatientImage.objects.all()
     message["secondPulData"] = message["secondPulData"][-90:]
     message["secondTempData"] = message["secondTempData"][-90:]
     message["timeData"] = message["timeData"][-90:]
     message["details"] = patient
     message["daily"] = daily
     message["weekly"] = actualWeekly
+    message["images"] = image
     return render(request, "patient.html", message)
 
 def doctor_dashboard_view(request):
     if not request.user.is_authenticated:
-        return render(request,"login.html",{"message": None})
+        return render(request,"login.html",{"message":None,"screen": screenWidth})
     current_user = request.user
     user_type = UserType.objects.filter(username=current_user.username)
     user_type = user_type[0]
@@ -135,7 +145,7 @@ def doctor_dashboard_view(request):
 
 def redirect_adddata_view(request):
     if not request.user.is_authenticated:
-        return render(request,"login.html",{"message": None})
+        return render(request,"login.html",{"message":None,"screen": screenWidth})
     message = {
         "details": request.POST["patient"]
     }
@@ -150,7 +160,7 @@ def redirect_adddata_view(request):
 # need to somehow pass patient ID for both
 def add_weekly_view(request):
     if not request.user.is_authenticated:
-        return render(request,"login.html",{"message": None})
+        return render(request,"login.html",{"message":None,"screen": screenWidth})
     if request.method == 'POST':
         patient_check = request.POST["patient"]
         patients = Patients.objects.all()
@@ -170,7 +180,7 @@ def add_weekly_view(request):
 
 def add_daily_view(request):
     if not request.user.is_authenticated:
-        return render(request,"login.html",{"message": None})
+        return render(request,"login.html",{"screen":screenWidth,"message": None})
     if request.method == 'POST':
         patient_check = request.POST["patient"]
         patients = Patients.objects.all()
@@ -199,7 +209,7 @@ def add_daily_view(request):
 
 def redirect_notify(request):
     if not request.user.is_authenticated:
-        return render(request,"login.html",{"message": None})
+        return render(request,"login.html",{"message":None,"screen": screenWidth})
     if request.method == 'POST':
         current_user = request.user
         user_type = UserType.objects.filter(username=current_user.username)
@@ -219,7 +229,7 @@ def redirect_notify(request):
 
 def doctor_email(request):
     if not request.user.is_authenticated:
-        return render(request,"login.html",{"message": None})
+        return render(request,"login.html",{"message":None,"screen": screenWidth})
     if request.method == 'POST':
         content = request.POST["message"]
         title = request.POST["title"]

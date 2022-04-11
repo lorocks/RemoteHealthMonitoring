@@ -28,6 +28,8 @@ class Patients(models.Model):
     Name = models.CharField(max_length=100, null=False, blank=False)
     DOB = models.DateField(null=False, blank=False)
     Gender = models.CharField(max_length = 1, choices = GenderChoices)
+    Age = models.IntegerField(null=False, blank=False, default=1)
+    BloodType = models.CharField(max_length=3, null=False, blank=False, default="A+")
     Address = models.CharField(max_length = 150, null=False, blank=False)
     ContactNum = models.CharField(max_length = 12, null = False, blank = False)
     EmergencyContact = models.CharField(max_length = 12, null = False, blank = False)

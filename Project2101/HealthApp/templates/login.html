@@ -21,8 +21,13 @@
             </div>
             <div class="w-1/2 h-96">
                 <div class="bg-cover h-screen" style="background-image:url('/static/waves1.jpg')"></div>
-                    <div class="absolute min-h-full justify-center items-center mt-10 w-96 px-8 py-6 mt-4 text-left bg-white shadow-lg" style="transform: translate(50%, -170%);">
-                    <h2 class="text-center text-4xl text-indigo-900 font-display font-semibold lg:text-left xl:text-5xl
+                {% if screen %}
+                    <div class="absolute min-h-1/2 justify-center items-center mt-10 w-96 px-8 py-6 mt-4 text-left bg-white shadow-lg" style="transform: translate(50%, -170%);">
+                {% else %}
+                    <div class="static top-28 left-2/3 min-h-1/2 justify-center items-center mt-10 w-96 px-8 py-6 mt-4 text-left bg-white shadow-lg" style="transform: translate(40%, -130%);">
+                {% endif %}
+
+                                <h2 class="text-center text-4xl text-green-900 font-display font-semibold lg:text-left xl:text-5xl
                     xl:text-bold">Log in</h2>
                     <div class="mt-12">
                         <form action="{% url 'login' %}" method="post">
@@ -51,6 +56,7 @@
                 </div>
             </div>
         </div>
+</div>
 
 <!--<img class="object-cover" src="pic_trulli.jpg" alt="Italian Trulli">-->
 <!--<h1>Login</h1>-->
