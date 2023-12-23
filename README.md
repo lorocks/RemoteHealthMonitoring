@@ -6,7 +6,7 @@ A device is built to measure a patient's heart rate, temperature and blood oxyge
 <br>
 This data is then sent to a web server where doctors and the patient themselves can view live statistics.
 <br>
-The device is built using an Arnuino Nano or ESP32 with the MAX30102 sensor being used.
+The device is built using an Arduino Nano or ESP32 with the MAX30102 sensor being used.
 <br>
 # Website
 The website separates doctor and patient login and displays real-time data.
@@ -17,6 +17,7 @@ An email feature has been implemented for doctor - patient communication.
 <br>
 Jobs are scheduled to run the Machine Learning analysis daily and to remove any useless data.
 <br>
+The website is built using the Django framework.
 
 # Extra Features
 An alert system has built to notify doctors of any emergency situation with the patient, through email and website notifications.
